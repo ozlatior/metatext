@@ -1,0 +1,263 @@
+<head>
+	<style id="styles">
+		p {
+			display: inline-block;
+			background-color: #FFFF99;
+			margin: 10px;
+			padding: 0px;
+		}
+
+		p.straight {
+			font-weight: normal;
+			font-style: normal;
+		}
+
+		p.italic {
+			font-weight: normal;
+			font-style: italic;
+		}
+
+		p.bold {
+			font-weight: bold;
+			font-style: normal;
+		}
+
+		p.bold-italic {
+			font-weight: bold;
+			font-style: italic;
+		}
+
+		p.narrow {
+			letter-spacing: -2px;
+		}
+
+		p.regular {
+			letter-spacing: 0px;
+		}
+
+		p.wide {
+			letter-spacing: 2px;
+		}
+
+		p.s10 {
+			font-size: 10px;
+		}
+
+		p.s15 {
+			font-size: 15px;
+		}
+
+		p.s20 {
+			font-size: 20px;
+		}
+
+		p.georgia {
+			font-family: Georgia, serif;
+		}
+
+		p.palatino {
+			font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+		}
+
+		p.times {
+			font-family: "Times New Roman", Times, serif;
+		}
+
+		p.serif {
+			font-family: serif;
+		}
+
+		p.arial {
+			font-family: Arial, sans-serif;
+		}
+
+		p.helvetica {
+			font-family: Helvetica, sans-serif;
+		}
+
+		p.gadget {
+			font-family: "Arial Black", Gadget, sans-serif;
+		}
+
+		p.comic {
+			font-family: "Comic Sans MS", cursive, sans-serif;
+		}
+
+		p.cursive {
+			font-family: cursive, sans-serif;
+		}
+
+		p.impact {
+			font-family: Impact, Charcoal, sans-serif;
+		}
+
+		p.lucida {
+			font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+		}
+
+		p.tahoma {
+			font-family: Tahoma, Geneva, sans-serif;
+		}
+
+		p.trebuchet {
+			font-family: "Trebuchet MS", sans-serif;
+		}
+
+		p.verdana {
+			font-family: Verdana, Geneva, sans-serif;
+		}
+
+		p.sans-serif {
+			font-family: sans-serif;
+		}
+
+		p.courier {
+			font-family: "Courier New", courier, monospace;
+		}
+
+		p.console {
+			font-family: "Lucida Console", Monaco, monospace;
+		}
+
+		p.monospace {
+			font-family: monospace;
+		}
+
+	</style>
+</head>
+
+<body>
+	<div id="content"></div>
+	<script type="text/javascript">
+		var fonts = [ "georgia", "palatino", "times", "serif", "arial", "helvetica", "gadget", "comic", "cursive", "impact", "lucida", "tahoma", "trebuchet", "verdana", "sans-serif", "courier", "console", "monospace" ];
+		var weights = [ "straight", "italic", "bold", "bold-italic" ];
+		var variants = [ "narrow", "regular", "wide" ];
+		var sizes = [ "s10", "s15", "s20" ];
+		var classes = [];
+		for (var i=0; i<fonts.length; i++)
+			for (var j=0; j<weights.length; j++)
+				for (var k=0; k<variants.length; k++)
+					for (var l=0; l<sizes.length; l++)
+						classes.push(fonts[i] + " " + weights[j] + " " + variants[k] + " " + sizes[l]);
+		var html = "";
+		for (var cls=0; cls<classes.length; cls++) {
+			for (var i=1; i<128; i++) {
+				var id = classes[cls].replace(/ /g, ".") + "." + i;
+				var pea = "";
+				// special handling for spaces, since they are not displayed in html... we have to trick them
+				// and compare lengths with the same string without spaces
+				if (i === 32)
+					pea += "a b c d e f g h i j k l m n o p q r s t u v w x y";
+				else
+					for (var j=0; j<50; j++)
+						pea += String.fromCharCode(i);
+				pea = "<p id='" + id + "' class='" + classes[cls] + "'>" + pea + "</p>";
+				html += pea;
+				if (i === 32)
+					html += "<p id='" + id + ".compare' class='" + classes[cls] + "'>abcdefghijklmnopqrstuvwxy</p>";
+			}
+		}
+		document.getElementById("content").innerHTML = html;
+
+		var ret = {};
+
+		for (var cls=0; cls<classes.length; cls++) {
+			var path = classes[cls].split(" ");
+			if (ret[path[0]] === undefined)
+				ret[path[0]] = {};
+			if (ret[path[0]][path[1]] === undefined)
+				ret[path[0]][path[1]] = {};
+			if (ret[path[0]][path[1]][path[2]] === undefined)
+				ret[path[0]][path[1]][path[2]] = {};
+			if (ret[path[0]][path[1]][path[2]][path[3]] === undefined)
+				ret[path[0]][path[1]][path[2]][path[3]] = [ -1 ];
+			var avgWidth = 0;
+			var maxHeight = 0;
+			for (var i=1; i<128; i++) {
+				var id = classes[cls].replace(/ /g, ".") + "." + i;
+				var element = document.getElementById(id);
+				var width = element.clientWidth / 50;
+				// special handling of spaces
+				if (i === 32) {
+					width = element.clientWidth - document.getElementById(id+".compare").clientWidth;
+					width = width / 25; // we only have 25 spaces here
+				}
+				ret[path[0]][path[1]][path[2]][path[3]].push([ width, element.clientHeight ]);
+				avgWidth += width;
+				if (element.clientHeight > maxHeight)
+					maxHeight = element.clientHeight;
+			}
+			ret[path[0]][path[1]][path[2]][path[3]][0] = [ avgWidth / 127, maxHeight ];
+		}
+
+		// build font metrics
+		var res = {};
+		for (var i in ret) {
+			if (res[i] === undefined)
+				res[i] = {};
+			for (var j in ret[i]) {
+				res[i][j] = []; // array to store parameters for every chararacter code
+				var item = ret[i][j];
+				for (var k=0; k<128; k++) {
+					var toPush = {
+						wat15: null,	// width at 15px
+						wsb15: null,	// width slope below 15px
+						wsa15: null,	// width slope above 15px
+						hat15: null,	// height at 15px
+						hsb15: null,	// height slope below 15px
+						hsa15: null,	// height slope above 15px
+						en15: null,		// extra-width for narrow display at 15px
+						ew15: null,		// extra-width for wide display at 15px
+						enb15: null,	// extra-width slope for narrow display below 15px
+						ewb15: null,	// extra-width slope for wide display below 15px
+						ena15: null,	// extra-width slope for narrow display above 15px
+						ewa15: null		// extra-width slope for wide display above 15px
+					};
+					toPush.wat15 = item.regular.s15[k][0];
+					toPush.wsb15 = (item.regular.s15[k][0] - item.regular.s10[k][0]) / 5;  // /5 because we have 5 px difference
+					toPush.wsa15 = (item.regular.s20[k][0] - item.regular.s15[k][0]) / 5;
+					toPush.hat15 = item.regular.s15[k][1];
+					toPush.hsb15 = (item.regular.s15[k][1] - item.regular.s10[k][1]) / 5;
+					toPush.hsa15 = (item.regular.s20[k][1] - item.regular.s15[k][1]) / 5;
+					toPush.en15 = (item.narrow.s15[k][0] - item.regular.s15[k][0]) / 2;  // /2 because we have 2 px difference
+					toPush.ew15 = (item.wide.s15[k][0] - item.regular.s15[k][0]) / 2;
+					toPush.enb15 = (toPush.en15 - (item.narrow.s10[k][0] - item.regular.s10[k][0]) / 2) / 5;
+					toPush.ewb15 = (toPush.en15 - (item.wide.s10[k][0] - item.regular.s10[k][0]) / 2) / 5;
+					toPush.ena15 = ((item.narrow.s20[k][0] - item.regular.s20[k][0]) / 2 - toPush.en15) / 5;
+					toPush.ewa15 = ((item.wide.s20[k][0] - item.regular.s20[k][0]) / 2 - toPush.en15) / 5;
+					res[i][j].push(toPush);
+				}
+			}
+		}
+
+		// build font map
+		var map = {};
+		var styles = document.getElementById("styles").innerHTML;
+		styles = styles.replace(/[\n\t]+/g, " ").replace(/ +/g, " ").split("}");
+		for (var i=0; i<styles.length; i++) {
+			var pcs = styles[i].split("{");
+			if (pcs.length !== 2)
+				continue;
+			var def = pcs[0].replace(/ /g, "");
+			var body = pcs[1].split(";");
+			var font = null;
+			for (var j=0; j<body.length; j++)
+				if (body[j].indexOf("font-family:") !== -1) {
+					font = body[j].split(":")[1].split(",");
+				}
+			if (font === null)
+				continue;
+			def = def.split(".")[1];
+			for (var j=0; j<font.length; j++) {
+				var key = font[j].replace(/^ +/, "").replace(/ +$/, "").replace(/"/g, "");
+				map[key] = def;
+			}
+		}
+
+		document.getElementById("content").innerHTML = JSON.stringify({
+			map: map,
+			params: res
+		}, null, 2);
+
+	</script>
+</body>
