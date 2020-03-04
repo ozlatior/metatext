@@ -739,4 +739,86 @@ Geometry.prototype.getRelativeFlags = function(g, tolerance) {
 	return this.getRelativePosition(g) | this.getRelativeAlignment(g, tolerance);
 };
 
+/*
+ * Get distance relative to another geometry element
+ * Left, Right, Top, Bottom - distances between each elements side (even if swapped)
+ * Leftmost, Rightmost, Topmost, Bottommost - distances between elements side by geometric position
+ * X, Y: minimum distance on X and Y coordinates (for measuring distances between disjunct elements)
+ */
+Geometry.prototype.getDistanceLeft = function(g) {
+	return Math.abs(this.left - g.left);
+};
+
+Geometry.prototype.getDistanceRight = function(g) {
+	return Math.abs(this.right - g.right);
+};
+
+Geometry.prototype.getDistanceTop = function(g) {
+	return Math.abs(this.top - g.top);
+};
+
+Geometry.prototype.getDistanceBottom = function(g) {
+	return Math.abs(this.bottom - g.bottom);
+};
+
+Geometry.prototype.getDistanceLeftmost = function(g) {
+	let p1 = this.left;
+	if (this.right < p1)
+		p1 = this.right;
+	let p2 = g.left;
+	if (g.right < p2)
+		p2 = g.right;
+	return Math.abs(p1 - p2);
+};
+
+Geometry.prototype.getDistanceRightmost = function(g) {
+	let p1 = this.right;
+	if (this.left > p1)
+		p1 = this.left;
+	let p2 = g.right;
+	if (g.left > p2)
+		p2 = g.left;
+	return Math.abs(p1 - p2);
+};
+
+Geometry.prototype.getDistanceTopmost = function(g) {
+	let p1 = this.top;
+	if (this.bottom < p1)
+		p1 = this.bottom;
+	let p2 = g.top;
+	if (g.bottom < p2)
+		p2 = g.bottom;
+	return Math.abs(p1 - p2);
+};
+
+Geometry.prototype.getDistanceBottommost = function(g) {
+	let p1 = this.bottom;
+	if (this.top > p1)
+		p1 = this.top;
+	let p2 = g.bottom;
+	if (g.top > p2)
+		p2 = g.top;
+	return Math.abs(p1 - p2);
+};
+
+Geometry.prototype.getDistanceX = function(g) {
+	let target = [ this.left, this.right ];
+	let ref = [ g.left, g.right ];
+	target.sort((a, b) => { return a - b; });
+	ref.sort((a, b) => { return a - b; });
+	let ret = [ Math.abs(target[0] - ref[1]), Math.abs(target[1] - ref[0]) ];
+	ret.sort((a, b) => { return a - b; });
+	return ret[0];
+};
+
+Geometry.prototype.getDistanceY = function(g) {
+	let target = [ this.top, this.bottom ];
+	let ref = [ g.top, g.bottom ];
+	target.sort((a, b) => { return a - b; });
+	ref.sort((a, b) => { return a - b; });
+	let ret = [ Math.abs(target[0] - ref[1]), Math.abs(target[1] - ref[0]) ];
+	ret.sort((a, b) => { return a - b; });
+	return ret[0];
+};
+
 module.exports = Geometry;

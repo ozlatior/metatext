@@ -902,4 +902,71 @@ describe("Geometry Class", () => {
 
 	});
 
+
+	describe("Relative distance calculation", () => {
+
+		describe("Relative distance to same edges of a different object", () => {
+
+			it("Calculates distances for positive-positive direction", () => {
+				var g1 = new Geometry(100, 200, 300, 400);
+				var g2 = new Geometry(500, 600, 100, 200);
+				assert.equal(g1.getDistanceLeft(g2), 400);
+				assert.equal(g1.getDistanceTop(g2), 400);
+				assert.equal(g1.getDistanceRight(g2), 200);
+				assert.equal(g1.getDistanceBottom(g2), 200);
+			});
+
+			it("Calculates distances for negative-negative direction", () => {
+				var g1 = new Geometry(400, 600, -300, -400);
+				var g2 = new Geometry(600, 800, -100, -200);
+				assert.equal(g1.getDistanceLeft(g2), 200);
+				assert.equal(g1.getDistanceTop(g2), 200);
+				assert.equal(g1.getDistanceRight(g2), 400);
+				assert.equal(g1.getDistanceBottom(g2), 400);
+			});
+
+		});
+
+		describe("Relative distance to same-side edges of a different object", () => {
+
+			it("Calculates distances for positive-positive direction", () => {
+				var g1 = new Geometry(100, 200, 300, 400);
+				var g2 = new Geometry(500, 600, 100, 200);
+				assert.equal(g1.getDistanceLeftmost(g2), 400);
+				assert.equal(g1.getDistanceTopmost(g2), 400);
+				assert.equal(g1.getDistanceRightmost(g2), 200);
+				assert.equal(g1.getDistanceBottommost(g2), 200);
+			});
+
+			it("Calculates distances for negative-negative direction", () => {
+				var g1 = new Geometry(400, 600, -300, -400);
+				var g2 = new Geometry(600, 800, -100, -200);
+				assert.equal(g1.getDistanceLeftmost(g2), 400);
+				assert.equal(g1.getDistanceTopmost(g2), 400);
+				assert.equal(g1.getDistanceRightmost(g2), 200);
+				assert.equal(g1.getDistanceBottommost(g2), 200);
+			});
+
+		});
+
+		describe("Relative distance between closest sides to a different object", () => {
+
+			it("Calculates distances for positive-positive direction", () => {
+				var g1 = new Geometry(100, 200, 300, 400);
+				var g2 = new Geometry(500, 600, 100, 200);
+				assert.equal(g1.getDistanceX(g2), 100);
+				assert.equal(g1.getDistanceY(g2), 0);
+			});
+
+			it("Calculates distances for negative-negative direction", () => {
+				var g1 = new Geometry(400, 600, -300, -400);
+				var g2 = new Geometry(600, 800, -100, -200);
+				assert.equal(g1.getDistanceX(g2), 100);
+				assert.equal(g1.getDistanceY(g2), 0);
+			});
+
+		});
+
+	});
+
 });
