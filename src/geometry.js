@@ -286,31 +286,31 @@ Geometry.prototype.getRelative = function() {
 /*
  * Get "margin" (distance) information relative to parent
  */
-Geometry.prototype.getLeftDistance = function() {
+Geometry.prototype.getLeftMargin = function() {
 	if (this._parent === null)
 		return undefined;
 	return this.left - this._parent.left;
 };
 
-Geometry.prototype.getTopDistance = function() {
+Geometry.prototype.getTopMargin = function() {
 	if (this._parent === null)
 		return undefined;
 	return this.top - this._parent.top;
 };
 
-Geometry.prototype.getRightDistance = function() {
+Geometry.prototype.getRightMargin = function() {
 	if (this._parent === null)
 		return undefined;
 	return this._parent.right - this.right;
 };
 
-Geometry.prototype.getBottomDistance = function() {
+Geometry.prototype.getBottomMargin = function() {
 	if (this._parent === null)
 		return undefined;
 	return this._parent.bottom - this.bottom;
 };
 
-Geometry.prototype.getDistance = function() {
+Geometry.prototype.getMargin = function() {
 	if (this._parent === null)
 		return undefined;
 	return {

@@ -368,43 +368,43 @@ describe("Geometry Class", () => {
 
 	});
 
-	describe("Distance getters", () => {
+	describe("Margin getters", () => {
 
 		describe("Undefined distance in case no parent is defined", () => {
 
 			it("Gets individual distances", () => {
 				var geometry = new Geometry(50, 100, 200, 250);
-				assert.equal(geometry.getLeftDistance(), undefined);
-				assert.equal(geometry.getTopDistance(), undefined);
-				assert.equal(geometry.getRightDistance(), undefined);
-				assert.equal(geometry.getBottomDistance(), undefined);
+				assert.equal(geometry.getLeftMargin(), undefined);
+				assert.equal(geometry.getTopMargin(), undefined);
+				assert.equal(geometry.getRightMargin(), undefined);
+				assert.equal(geometry.getBottomMargin(), undefined);
 			});
 
 			it("Gets distance object (as undefined)", () => {
 				var geometry = new Geometry(50, 100, 200, 250);
-				var distance = geometry.getDistance();
+				var distance = geometry.getMargin();
 				assert.equal(distance, undefined);
 			});
 
 		});
 
-		describe("Distance relative to parent in case parent is defined", () => {
+		describe("Margin relative to parent in case parent is defined", () => {
 
 			it("Gets individual positions", () => {
 				var geometry = new Geometry(150, 300, 200, 250);
 				var container = new Geometry(100, 200, 1000, 1000);
 				geometry.setParent(container);
-				assert.equal(geometry.getLeftDistance(), 50);
-				assert.equal(geometry.getTopDistance(), 100);
-				assert.equal(geometry.getRightDistance(), 750);
-				assert.equal(geometry.getBottomDistance(), 650);
+				assert.equal(geometry.getLeftMargin(), 50);
+				assert.equal(geometry.getTopMargin(), 100);
+				assert.equal(geometry.getRightMargin(), 750);
+				assert.equal(geometry.getBottomMargin(), 650);
 			});
 
 			it("Gets position object", () => {
 				var geometry = new Geometry(150, 300, 200, 250);
 				var container = new Geometry(100, 200, 1000, 1000);
 				geometry.setParent(container);
-				var distance = geometry.getDistance();
+				var distance = geometry.getMargin();
 				assert.equal(distance.left, 50);
 				assert.equal(distance.top, 100);
 				assert.equal(distance.right, 750);
