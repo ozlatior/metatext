@@ -415,4 +415,491 @@ describe("Geometry Class", () => {
 
 	});
 
+	describe("Addition functions", () => {
+
+		describe("Static addition", () => {
+
+			it("Adds two disjunct boxes and returns a new object (1)", () => {
+				var g1 = new Geometry(100, 200, 300, 400);
+				var g2 = new Geometry(500, 700, 100, 200);
+				var r = Geometry.add(g1, g2);
+				assert.notEqual(r, g1);
+				assert.notEqual(r, g2);
+				assert.equal(r.getLeft(), 100);
+				assert.equal(r.getTop(), 200);
+				assert.equal(r.getRight(), 600);
+				assert.equal(r.getBottom(), 900);
+				assert.equal(r.getWidth(), 500);
+				assert.equal(r.getHeight(), 700);
+			});
+
+			it("Adds two disjunct boxes and returns a new object (2)", () => {
+				var g1 = new Geometry(500, 700, 100, 200);
+				var g2 = new Geometry(100, 200, 300, 400);
+				var r = Geometry.add(g1, g2);
+				assert.notEqual(r, g1);
+				assert.notEqual(r, g2);
+				assert.equal(r.getLeft(), 100);
+				assert.equal(r.getTop(), 200);
+				assert.equal(r.getRight(), 600);
+				assert.equal(r.getBottom(), 900);
+				assert.equal(r.getWidth(), 500);
+				assert.equal(r.getHeight(), 700);
+			});
+
+			it("Adds two intersecting boxes and returns a new object (1)", () => {
+				var g1 = new Geometry(100, 200, 300, 400);
+				var g2 = new Geometry(300, 300, 200, 300);
+				var r = Geometry.add(g1, g2);
+				assert.notEqual(r, g1);
+				assert.notEqual(r, g2);
+				assert.equal(r.getLeft(), 100);
+				assert.equal(r.getTop(), 200);
+				assert.equal(r.getRight(), 500);
+				assert.equal(r.getBottom(), 600);
+				assert.equal(r.getWidth(), 400);
+				assert.equal(r.getHeight(), 400);
+			});
+
+			it("Adds two intersecting boxes and returns a new object (2)", () => {
+				var g1 = new Geometry(300, 300, 200, 300);
+				var g2 = new Geometry(100, 200, 300, 400);
+				var r = Geometry.add(g1, g2);
+				assert.notEqual(r, g1);
+				assert.notEqual(r, g2);
+				assert.equal(r.getLeft(), 100);
+				assert.equal(r.getTop(), 200);
+				assert.equal(r.getRight(), 500);
+				assert.equal(r.getBottom(), 600);
+				assert.equal(r.getWidth(), 400);
+				assert.equal(r.getHeight(), 400);
+			});
+
+			it("Adds two overlapping boxes and returns a new object (1)", () => {
+				var g1 = new Geometry(100, 200, 400, 500);
+				var g2 = new Geometry(300, 300, 200, 300);
+				var r = Geometry.add(g1, g2);
+				assert.notEqual(r, g1);
+				assert.notEqual(r, g2);
+				assert.equal(r.getLeft(), 100);
+				assert.equal(r.getTop(), 200);
+				assert.equal(r.getRight(), 500);
+				assert.equal(r.getBottom(), 700);
+				assert.equal(r.getWidth(), 400);
+				assert.equal(r.getHeight(), 500);
+			});
+
+			it("Adds two overlapping boxes and returns a new object (2)", () => {
+				var g1 = new Geometry(300, 300, 200, 300);
+				var g2 = new Geometry(100, 200, 400, 500);
+				var r = Geometry.add(g1, g2);
+				assert.notEqual(r, g1);
+				assert.notEqual(r, g2);
+				assert.equal(r.getLeft(), 100);
+				assert.equal(r.getTop(), 200);
+				assert.equal(r.getRight(), 500);
+				assert.equal(r.getBottom(), 700);
+				assert.equal(r.getWidth(), 400);
+				assert.equal(r.getHeight(), 500);
+			});
+
+		});
+
+		describe("Static addition, swapped", () => {
+
+			it("Adds two disjunct boxes and returns a new object (1)", () => {
+				var g1 = new Geometry(400, 600, -300, -400);
+				var g2 = new Geometry(600, 900, -100, -200);
+				var r = Geometry.add(g1, g2);
+				assert.notEqual(r, g1);
+				assert.notEqual(r, g2);
+				assert.equal(r.getLeft(), 100);
+				assert.equal(r.getTop(), 200);
+				assert.equal(r.getRight(), 600);
+				assert.equal(r.getBottom(), 900);
+				assert.equal(r.getWidth(), 500);
+				assert.equal(r.getHeight(), 700);
+			});
+
+			it("Adds two disjunct boxes and returns a new object (2)", () => {
+				var g1 = new Geometry(600, 900, -100, -200);
+				var g2 = new Geometry(400, 600, -300, -400);
+				var r = Geometry.add(g1, g2);
+				assert.notEqual(r, g1);
+				assert.notEqual(r, g2);
+				assert.equal(r.getLeft(), 100);
+				assert.equal(r.getTop(), 200);
+				assert.equal(r.getRight(), 600);
+				assert.equal(r.getBottom(), 900);
+				assert.equal(r.getWidth(), 500);
+				assert.equal(r.getHeight(), 700);
+			});
+
+			it("Adds two intersecting boxes and returns a new object (1)", () => {
+				var g1 = new Geometry(400, 600, -300, -400);
+				var g2 = new Geometry(500, 600, -200, -300);
+				var r = Geometry.add(g1, g2);
+				assert.notEqual(r, g1);
+				assert.notEqual(r, g2);
+				assert.equal(r.getLeft(), 100);
+				assert.equal(r.getTop(), 200);
+				assert.equal(r.getRight(), 500);
+				assert.equal(r.getBottom(), 600);
+				assert.equal(r.getWidth(), 400);
+				assert.equal(r.getHeight(), 400);
+			});
+
+			it("Adds two intersecting boxes and returns a new object (2)", () => {
+				var g1 = new Geometry(500, 600, -200, -300);
+				var g2 = new Geometry(400, 600, -300, -400);
+				var r = Geometry.add(g1, g2);
+				assert.notEqual(r, g1);
+				assert.notEqual(r, g2);
+				assert.equal(r.getLeft(), 100);
+				assert.equal(r.getTop(), 200);
+				assert.equal(r.getRight(), 500);
+				assert.equal(r.getBottom(), 600);
+				assert.equal(r.getWidth(), 400);
+				assert.equal(r.getHeight(), 400);
+			});
+
+			it("Adds two overlapping boxes and returns a new object (1)", () => {
+				var g1 = new Geometry(500, 700, -400, -500);
+				var g2 = new Geometry(500, 600, -200, -300);
+				var r = Geometry.add(g1, g2);
+				assert.notEqual(r, g1);
+				assert.notEqual(r, g2);
+				assert.equal(r.getLeft(), 100);
+				assert.equal(r.getTop(), 200);
+				assert.equal(r.getRight(), 500);
+				assert.equal(r.getBottom(), 700);
+				assert.equal(r.getWidth(), 400);
+				assert.equal(r.getHeight(), 500);
+			});
+
+			it("Adds two overlapping boxes and returns a new object (2)", () => {
+				var g1 = new Geometry(500, 600, -200, -300);
+				var g2 = new Geometry(500, 700, -400, -500);
+				var r = Geometry.add(g1, g2);
+				assert.notEqual(r, g1);
+				assert.notEqual(r, g2);
+				assert.equal(r.getLeft(), 100);
+				assert.equal(r.getTop(), 200);
+				assert.equal(r.getRight(), 500);
+				assert.equal(r.getBottom(), 700);
+				assert.equal(r.getWidth(), 400);
+				assert.equal(r.getHeight(), 500);
+			});
+
+		});
+
+		describe("Object addition", () => {
+
+			it("Adds a disjunct box to existing box (1)", () => {
+				var g1 = new Geometry(100, 200, 300, 400);
+				var g2 = new Geometry(500, 700, 100, 200);
+				g1.add(g2);
+				assert.equal(g1.getLeft(), 100);
+				assert.equal(g1.getTop(), 200);
+				assert.equal(g1.getRight(), 600);
+				assert.equal(g1.getBottom(), 900);
+				assert.equal(g1.getWidth(), 500);
+				assert.equal(g1.getHeight(), 700);
+			});
+
+			it("Adds a disjunct box to existing box (2)", () => {
+				var g1 = new Geometry(500, 700, 100, 200);
+				var g2 = new Geometry(100, 200, 300, 400);
+				g1.add(g2);
+				assert.equal(g1.getLeft(), 100);
+				assert.equal(g1.getTop(), 200);
+				assert.equal(g1.getRight(), 600);
+				assert.equal(g1.getBottom(), 900);
+				assert.equal(g1.getWidth(), 500);
+				assert.equal(g1.getHeight(), 700);
+			});
+
+			it("Adds an intersecting box to existing box (1)", () => {
+				var g1 = new Geometry(100, 200, 300, 400);
+				var g2 = new Geometry(300, 300, 200, 300);
+				g1.add(g2);
+				assert.equal(g1.getLeft(), 100);
+				assert.equal(g1.getTop(), 200);
+				assert.equal(g1.getRight(), 500);
+				assert.equal(g1.getBottom(), 600);
+				assert.equal(g1.getWidth(), 400);
+				assert.equal(g1.getHeight(), 400);
+			});
+
+			it("Adds an intersecting box to existing box (2)", () => {
+				var g1 = new Geometry(300, 300, 200, 300);
+				var g2 = new Geometry(100, 200, 300, 400);
+				g1.add(g2);
+				assert.equal(g1.getLeft(), 100);
+				assert.equal(g1.getTop(), 200);
+				assert.equal(g1.getRight(), 500);
+				assert.equal(g1.getBottom(), 600);
+				assert.equal(g1.getWidth(), 400);
+				assert.equal(g1.getHeight(), 400);
+			});
+
+			it("Adds overlapping box to existing box (1)", () => {
+				var g1 = new Geometry(100, 200, 400, 500);
+				var g2 = new Geometry(300, 300, 200, 300);
+				g1.add(g2);
+				assert.equal(g1.getLeft(), 100);
+				assert.equal(g1.getTop(), 200);
+				assert.equal(g1.getRight(), 500);
+				assert.equal(g1.getBottom(), 700);
+				assert.equal(g1.getWidth(), 400);
+				assert.equal(g1.getHeight(), 500);
+			});
+
+			it("Adds overlapping box to existing box (2)", () => {
+				var g1 = new Geometry(300, 300, 200, 300);
+				var g2 = new Geometry(100, 200, 400, 500);
+				g1.add(g2);
+				assert.equal(g1.getLeft(), 100);
+				assert.equal(g1.getTop(), 200);
+				assert.equal(g1.getRight(), 500);
+				assert.equal(g1.getBottom(), 700);
+				assert.equal(g1.getWidth(), 400);
+				assert.equal(g1.getHeight(), 500);
+			});
+
+		});
+
+		describe("Object addition, swapped (negative orientation)", () => {
+
+			it("Adds a disjunct box to an existing box (1)", () => {
+				var g1 = new Geometry(400, 600, -300, -400);
+				var g2 = new Geometry(600, 900, -100, -200);
+				g1.add(g2);
+				assert.equal(g1.getLeft(), 600);
+				assert.equal(g1.getTop(), 900);
+				assert.equal(g1.getRight(), 100);
+				assert.equal(g1.getBottom(), 200);
+				assert.equal(g1.getWidth(), -500);
+				assert.equal(g1.getHeight(), -700);
+			});
+
+			it("Adds a disjunct box to an existing box (2)", () => {
+				var g1 = new Geometry(600, 900, -100, -200);
+				var g2 = new Geometry(400, 600, -300, -400);
+				g1.add(g2);
+				assert.equal(g1.getLeft(), 600);
+				assert.equal(g1.getTop(), 900);
+				assert.equal(g1.getRight(), 100);
+				assert.equal(g1.getBottom(), 200);
+				assert.equal(g1.getWidth(), -500);
+				assert.equal(g1.getHeight(), -700);
+			});
+
+			it("Adds an intersecting box to an existing box (1)", () => {
+				var g1 = new Geometry(400, 600, -300, -400);
+				var g2 = new Geometry(500, 600, -200, -300);
+				g1.add(g2);
+				assert.equal(g1.getLeft(), 500);
+				assert.equal(g1.getTop(), 600);
+				assert.equal(g1.getRight(), 100);
+				assert.equal(g1.getBottom(), 200);
+				assert.equal(g1.getWidth(), -400);
+				assert.equal(g1.getHeight(), -400);
+			});
+
+			it("Adds an intersecting box to an existing box (2)", () => {
+				var g1 = new Geometry(500, 600, -200, -300);
+				var g2 = new Geometry(400, 600, -300, -400);
+				g1.add(g2);
+				assert.equal(g1.getLeft(), 500);
+				assert.equal(g1.getTop(), 600);
+				assert.equal(g1.getRight(), 100);
+				assert.equal(g1.getBottom(), 200);
+				assert.equal(g1.getWidth(), -400);
+				assert.equal(g1.getHeight(), -400);
+			});
+
+			it("Adds an overlapping box to an existing box (1)", () => {
+				var g1 = new Geometry(500, 700, -400, -500);
+				var g2 = new Geometry(500, 600, -200, -300);
+				g1.add(g2);
+				assert.equal(g1.getLeft(), 500);
+				assert.equal(g1.getTop(), 700);
+				assert.equal(g1.getRight(), 100);
+				assert.equal(g1.getBottom(), 200);
+				assert.equal(g1.getWidth(), -400);
+				assert.equal(g1.getHeight(), -500);
+			});
+
+			it("Adds an overlapping box to an existing box (2)", () => {
+				var g1 = new Geometry(500, 600, -200, -300);
+				var g2 = new Geometry(500, 700, -400, -500);
+				g1.add(g2);
+				assert.equal(g1.getLeft(), 500);
+				assert.equal(g1.getTop(), 700);
+				assert.equal(g1.getRight(), 100);
+				assert.equal(g1.getBottom(), 200);
+				assert.equal(g1.getWidth(), -400);
+				assert.equal(g1.getHeight(), -500);
+			});
+
+		});
+
+	});
+
+	describe("Relative positions and alignment", () => {
+
+		describe("Relative position functions and flags", () => {
+
+			it("Detects position before another box", () => {
+				var g1 = new Geometry(100, 150, 200, 250);
+				var g2 = new Geometry(400, 500, 50, 75);
+				assert.equal(g1.isBeforeX(g2), true);
+				assert.equal(g1.isBeforeY(g2), true);
+				assert.equal(g1.getRelativePosition(g2), Geometry.rel.BEFORE_X | Geometry.rel.BEFORE_Y);
+				assert.equal(g1.getRelativeFlags(g2) & ( Geometry.rel.BEFORE_X | Geometry.rel.BEFORE_Y),
+														 Geometry.rel.BEFORE_X | Geometry.rel.BEFORE_Y);
+			});
+
+			it("Detects position after another box", () => {
+				var g1 = new Geometry(400, 500, 50, 75);
+				var g2 = new Geometry(100, 150, 200, 250);
+				assert.equal(g1.isAfterX(g2), true);
+				assert.equal(g1.isAfterY(g2), true);
+				assert.equal(g1.getRelativePosition(g2), Geometry.rel.AFTER_X | Geometry.rel.AFTER_Y);
+				assert.equal(g1.getRelativeFlags(g2) & ( Geometry.rel.AFTER_X | Geometry.rel.AFTER_Y),
+														 Geometry.rel.AFTER_X | Geometry.rel.AFTER_Y);
+			});
+
+			it("Detects position crossing the box on the top and left", () => {
+				var g1 = new Geometry(100, 150, 200, 250);
+				var g2 = new Geometry(280, 350, 50, 75);
+				assert.equal(g1.isCrossingLeft(g2), true);
+				assert.equal(g1.isCrossingTop(g2), true);
+				assert.equal(g1.getRelativePosition(g2), Geometry.rel.CROSSES_L | Geometry.rel.CROSSES_T);
+				assert.equal(g1.getRelativeFlags(g2) & ( Geometry.rel.CROSSES_L | Geometry.rel.CROSSES_T),
+														 Geometry.rel.CROSSES_L | Geometry.rel.CROSSES_T);
+			});
+
+			it("Detects position crossing the box on the bottom and right", () => {
+				var g1 = new Geometry(280, 350, 50, 75);
+				var g2 = new Geometry(100, 150, 200, 250);
+				assert.equal(g1.isCrossingRight(g2), true);
+				assert.equal(g1.isCrossingBottom(g2), true);
+				assert.equal(g1.getRelativePosition(g2), Geometry.rel.CROSSES_R | Geometry.rel.CROSSES_B);
+				assert.equal(g1.getRelativeFlags(g2) & ( Geometry.rel.CROSSES_R | Geometry.rel.CROSSES_B),
+														 Geometry.rel.CROSSES_R | Geometry.rel.CROSSES_B);
+			});
+
+			it("Detects that another box is included in first box", () => {
+				var g1 = new Geometry(100, 200, 400, 500);
+				var g2 = new Geometry(100, 300, 50, 75);
+				assert.equal(g1.isIncludedX(g2), true);
+				assert.equal(g1.isIncludedY(g2), true);
+				assert.equal(g1.isIncluded(g2), true);
+				assert.equal(g1.getRelativePosition(g2), Geometry.rel.INCLUDED_X | Geometry.rel.INCLUDED_Y);
+				assert.equal(g1.getRelativeFlags(g2) & ( Geometry.rel.INCLUDED_X | Geometry.rel.INCLUDED_Y),
+														 Geometry.rel.INCLUDED_X | Geometry.rel.INCLUDED_Y);
+			});
+
+			it("Detects that another box includes the first box", () => {
+				var g1 = new Geometry(100, 300, 50, 75);
+				var g2 = new Geometry(100, 200, 400, 500);
+				assert.equal(g1.isIncludingX(g2), true);
+				assert.equal(g1.isIncludingY(g2), true);
+				assert.equal(g1.isIncluding(g2), true);
+				assert.equal(g1.getRelativePosition(g2), Geometry.rel.INCLUDES_X | Geometry.rel.INCLUDES_Y);
+				assert.equal(g1.getRelativeFlags(g2) & ( Geometry.rel.INCLUDES_X | Geometry.rel.INCLUDES_Y),
+														 Geometry.rel.INCLUDES_X | Geometry.rel.INCLUDES_Y);
+			});
+
+			it("Detects that another box overlaps the first box", () => {
+				var g1 = new Geometry(100, 200, 400, 500);
+				var g2 = new Geometry(100, 200, 400, 500);
+				assert.equal(g1.isOverlappingX(g2), true);
+				assert.equal(g1.isOverlappingY(g2), true);
+				assert.equal(g1.isOverlapping(g2), true);
+				assert.equal(g1.getRelativePosition(g2),
+					Geometry.rel.OVERLAPS_X | Geometry.rel.OVERLAPS_Y |
+					Geometry.rel.INCLUDES_X | Geometry.rel.INCLUDES_Y |
+					Geometry.rel.INCLUDED_X | Geometry.rel.INCLUDED_Y
+				);
+				assert.equal(g1.getRelativeFlags(g2) & ( Geometry.rel.OVERLAPS_X | Geometry.rel.OVERLAPS_Y),
+														 Geometry.rel.OVERLAPS_X | Geometry.rel.OVERLAPS_Y);
+			});
+
+
+		});
+
+		describe("Relative alignment functions and flags", () => {
+
+			it("Detects that another box is aligned to the top and left on the outside", () => {
+				var g1 = new Geometry(100, 200, 300, 400);
+				var g2 = new Geometry(100, 200, -75, -50);
+				assert.equal(g1.isAlignedLeftOut(g2), true);
+				assert.equal(g1.isAlignedTopOut(g2), true);
+				assert.equal(g1.getRelativeAlignment(g2), Geometry.align.LEFT_OUT | Geometry.align.TOP_OUT);
+				assert.equal(g1.getRelativeFlags(g2)  & ( Geometry.align.LEFT_OUT | Geometry.align.TOP_OUT),
+														  Geometry.align.LEFT_OUT | Geometry.align.TOP_OUT);
+			});
+
+			it("Detects that another box is aligned to the top and left on the inside", () => {
+				var g1 = new Geometry(100, 200, 300, 400);
+				var g2 = new Geometry(100, 200, 75, 50);
+				assert.equal(g1.isAlignedLeft(g2), true);
+				assert.equal(g1.isAlignedTop(g2), true);
+				assert.equal(g1.getRelativeAlignment(g2), Geometry.align.LEFT | Geometry.align.TOP);
+				assert.equal(g1.getRelativeFlags(g2)  & ( Geometry.align.LEFT | Geometry.align.TOP),
+														  Geometry.align.LEFT | Geometry.align.TOP);
+				assert.equal(g2.isAlignedLeft(g1), true);
+				assert.equal(g2.isAlignedTop(g1), true);
+				assert.equal(g2.getRelativeAlignment(g1), Geometry.align.LEFT | Geometry.align.TOP);
+				assert.equal(g2.getRelativeFlags(g1)  & ( Geometry.align.LEFT | Geometry.align.TOP),
+														  Geometry.align.LEFT | Geometry.align.TOP);
+			});
+
+			it("Detects that another box is aligned to the center and middle", () => {
+				var g1 = new Geometry(100, 200, 300, 400);
+				var g2 = new Geometry(150, 250, 200, 300);
+				assert.equal(g1.isAlignedCenter(g2), true);
+				assert.equal(g1.isAlignedMiddle(g2), true);
+				assert.equal(g1.getRelativeAlignment(g2), Geometry.align.CENTER | Geometry.align.MIDDLE);
+				assert.equal(g1.getRelativeFlags(g2)  & ( Geometry.align.CENTER | Geometry.align.MIDDLE),
+														  Geometry.align.CENTER | Geometry.align.MIDDLE);
+				assert.equal(g2.isAlignedCenter(g1), true);
+				assert.equal(g2.isAlignedMiddle(g1), true);
+				assert.equal(g2.getRelativeAlignment(g1), Geometry.align.CENTER | Geometry.align.MIDDLE);
+				assert.equal(g2.getRelativeFlags(g1)  & ( Geometry.align.CENTER | Geometry.align.MIDDLE),
+														  Geometry.align.CENTER | Geometry.align.MIDDLE);
+			});
+
+			it("Detects that another box is aligned to the bottom and right on the inside", () => {
+				var g1 = new Geometry(100, 200, 300, 400);
+				var g2 = new Geometry(400, 600, -75, -50);
+				assert.equal(g1.isAlignedRight(g2), true);
+				assert.equal(g1.isAlignedBottom(g2), true);
+				assert.equal(g1.getRelativeAlignment(g2), Geometry.align.RIGHT | Geometry.align.BOTTOM);
+				assert.equal(g1.getRelativeFlags(g2)  & ( Geometry.align.RIGHT | Geometry.align.BOTTOM),
+														  Geometry.align.RIGHT | Geometry.align.BOTTOM);
+				assert.equal(g2.isAlignedRight(g1), true);
+				assert.equal(g2.isAlignedBottom(g1), true);
+				assert.equal(g2.getRelativeAlignment(g1), Geometry.align.RIGHT | Geometry.align.BOTTOM);
+				assert.equal(g2.getRelativeFlags(g1)  & ( Geometry.align.RIGHT | Geometry.align.BOTTOM),
+														  Geometry.align.RIGHT | Geometry.align.BOTTOM);
+			});
+
+			it("Detects that another box is aligned to the bottom and right on the outside", () => {
+				var g1 = new Geometry(100, 200, 300, 400);
+				var g2 = new Geometry(400, 600, 75, 50);
+				assert.equal(g1.isAlignedRightOut(g2), true);
+				assert.equal(g1.isAlignedBottomOut(g2), true);
+				assert.equal(g1.getRelativeAlignment(g2), Geometry.align.RIGHT_OUT | Geometry.align.BOTTOM_OUT);
+				assert.equal(g1.getRelativeFlags(g2)  & ( Geometry.align.RIGHT_OUT | Geometry.align.BOTTOM_OUT),
+														  Geometry.align.RIGHT_OUT | Geometry.align.BOTTOM_OUT);
+			});
+
+		});
+
+	});
+
 });
