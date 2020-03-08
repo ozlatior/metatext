@@ -114,9 +114,13 @@ HtmlParser.prototype.extractContent = function(domNode, content, path) {
 			style: children[i].getAttribute("style")
 		};
 		// calculate style using styleEngine
+		let parentStyle = null;
+		if (path.length > 0)
+			parentStyle = path[path.length-1].inheritedStyle;
 		let newPath = JSON.parse(JSON.stringify(path));
 		newPath.push(element);
-		element.calculatedStyle = this.styleEngine.getElementStyle(newPath);
+		element.computedStyle = this.styleEngine.getElementStyle(newPath);
+		element.inheritedStyle = this.styleEngine.getInheritedStyle(element.computedStyle, parentStyle);
 		this.extractContent(children[i], content, newPath);
 	}
 	// we didn't find any non-content children, extract the content and put it in the content list

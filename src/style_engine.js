@@ -14,6 +14,13 @@ var StyleEngine = function() {
  */
 StyleEngine.prototype.reset = function() {
 	this.styles = [];
+	this.inherited = [ "azimuth", "border-collapse", "border-spacing", "caption-side", "color",
+		"cursor", "direction", "elevation", "empty-cells", "font-family", "font-size", "font-style",
+		"font-variant", "font-weight", "font", "letter-spacing", "line-height", "list-style-image",
+		"list-style-position", "list-style-type", "list-style", "orphans", "pitch-range", "pitch",
+		"quotes", "richness", "speak-header", "speak-numeral", "speak-punctuation", "speak",
+		"speech-rate", "stress", "text-align", "text-indent", "text-transform", "visibility",
+		"voice-family", "volume", "white-space", "widows", "word-spacing" ];
 };
 
 /*
@@ -301,6 +308,24 @@ StyleEngine.prototype.getElementStyle = function(path) {
 	for (let i in properties)
 		properties[i] = properties[i].value;
 	return properties;
+};
+
+/*
+ * Get element inherited style based on computed styles: elementStyle and parentInheritedStyle
+ * are styles computed by getElementStyle (called for element path) and getInheritedStyle (called on the parent)
+ */
+StyleEngine.prototype.getInheritedStyle = function(elementStyle, parentInheritedStyle) {
+	let ret = {};
+	// nothing to inherit from? just return the element style
+	if (parentInheritedStyle === undefined || parentInheritedStyle === null)
+		return JSON.parse(JSON.stringify(elementStyle));
+	// copy inheritable properties from parent
+	for (let i in parentInheritedStyle)
+		if (this.inherited.indexOf(i) !== -1)
+			ret[i] = parentInheritedStyle[i];
+	for (let i in elementStyle)
+		ret[i] = elementStyle[i];
+	return ret;
 };
 
 module.exports = StyleEngine;
