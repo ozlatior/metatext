@@ -5,6 +5,7 @@
 		"test": "mocha"
 	},
 	"dependencies": {
+		"jsdom": "*",
 		"mocha": "*"
 	}
 }
