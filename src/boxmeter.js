@@ -6,6 +6,8 @@
 
 const settings = require("./boxmeter.json");
 
+var instance = null;
+
 const BoxMeter = function() {
 	// min width of a glyph
 	this.minWidth = 1;
@@ -52,6 +54,15 @@ const BoxMeter = function() {
 	for (var i in this.map)
 		if (this.metrics[this.map[i]] === undefined)
 			throw new Error("Unknown mapping " + this.map[i] + " for font " + i);
+};
+
+/*
+ * Singleton boxmeter instance
+ */
+BoxMeter.getInstance = function() {
+	if (instance === null)
+		instance = new BoxMeter();
+	return instance;
 };
 
 /*
@@ -259,6 +270,12 @@ BoxMeter.prototype.getTextBoundingBox = function(font, bold, italic, fontSize, s
 		throw new Error("Bad value for fontSize argument (" + fontSize + ")");
 	if (spacing.match(/^-?[0-9.]+px$/) === null)
 		throw new Error("Bad value for spacing argument (" + spacing + ")");
+
+	// correct fontSize and spacing if the miss the "px" part - this is good for caching
+	if (fontSize === "0")
+		fontSize = "0px";
+	if (spacing === "0")
+		spacing = "0px";
 
 	// get mapping and weight
 	var map = this.getMapping(font);
