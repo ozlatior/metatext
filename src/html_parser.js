@@ -117,18 +117,22 @@ HtmlParser.prototype.extractContent = function(domNode, content, path) {
 		let parentStyle = null;
 		if (path.length > 0)
 			parentStyle = path[path.length-1].inheritedStyle;
-		let newPath = JSON.parse(JSON.stringify(path));
+//		let newPath = JSON.parse(JSON.stringify(path));
+		let newPath = path.slice(0); // use slice to preserve references
 		newPath.push(element);
 		element.computedStyle = this.styleEngine.getElementStyle(newPath);
 		element.inheritedStyle = this.styleEngine.getInheritedStyle(element.computedStyle, parentStyle);
-		this.extractContent(children[i], content, newPath);
+		let size = this.extractContent(children[i], content, newPath);
 	}
 	// we didn't find any non-content children, extract the content and put it in the content list
-	if (children.length === 0)
-		content.push({
+	if (children.length === 0) {
+		let toPush = {
 			content: domNode.innerHTML,
 			path: path,
-		});
+			inheritedStyle: path[path.length-1].inheritedStyle
+		};
+		content.push(toPush);
+	}
 };
 
 /*
