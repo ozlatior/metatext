@@ -1,0 +1,323 @@
+{
+	"inheritedProperties": [
+		"azimuth", "border-collapse", "border-spacing", "caption-side", "color",
+		"cursor", "direction", "elevation", "empty-cells", "font-family", "font-size", "font-style",
+		"font-variant", "font-weight", "font", "letter-spacing", "line-height", "list-style-image",
+		"list-style-position", "list-style-type", "list-style", "orphans", "pitch-range", "pitch",
+		"quotes", "richness", "speak-header", "speak-numeral", "speak-punctuation", "speak",
+		"speech-rate", "stress", "text-align", "text-indent", "text-transform", "visibility",
+		"voice-family", "volume", "white-space", "widows", "word-spacing"
+	],
+	"htmlTagDefaultStyles": {
+		"a": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"abbr": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"acronym": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"address": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"article": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"aside": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"b": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"bdo": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"big": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"blockquote": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"br": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"button": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"canvas": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"cite": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"code": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"dd": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"dfn": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"div": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"dl": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"dt": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"em": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"fieldset": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"figcaption": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"figure": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"footer": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"form": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"h1>-<h6": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"header": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"hr": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"i": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"img": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"input": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"kbd": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"label": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"li": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"main": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"map": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"nav": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"noscript": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"object": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"ol": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"output": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"p": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"pre": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"q": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"samp": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"script": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"section": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"select": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"small": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"span": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"strong": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"sub": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"sup": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"table": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"textarea": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"tfoot": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"time": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"tt": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"ul": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		},
+		"var": {
+			"display": "inline",
+			"margin": "0",
+			"padding": "0"
+		},
+		"video": {
+			"display": "block",
+			"margin": "0",
+			"padding": "0"
+		}
+	}
+}

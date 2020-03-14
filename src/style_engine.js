@@ -5,6 +5,8 @@
 var html = require("util-one").html;
 var string = require("util-one").string;
 
+var config = require("./style_engine.json");
+
 var StyleEngine = function() {
 	this.reset();
 };
@@ -14,13 +16,8 @@ var StyleEngine = function() {
  */
 StyleEngine.prototype.reset = function() {
 	this.styles = [];
-	this.inherited = [ "azimuth", "border-collapse", "border-spacing", "caption-side", "color",
-		"cursor", "direction", "elevation", "empty-cells", "font-family", "font-size", "font-style",
-		"font-variant", "font-weight", "font", "letter-spacing", "line-height", "list-style-image",
-		"list-style-position", "list-style-type", "list-style", "orphans", "pitch-range", "pitch",
-		"quotes", "richness", "speak-header", "speak-numeral", "speak-punctuation", "speak",
-		"speech-rate", "stress", "text-align", "text-indent", "text-transform", "visibility",
-		"voice-family", "volume", "white-space", "widows", "word-spacing" ];
+	this.inherited = config.inheritedProperties;
+	this.tagDefaults = config.htmlTagDefaultStyles;
 };
 
 /*
@@ -278,6 +275,14 @@ StyleEngine.prototype.pathFollowsCondition = function(path, condition) {
 StyleEngine.prototype.getElementStyle = function(path) {
 	// object of properties based on the path of the element
 	let properties = {};
+	// apply default properties based on tag
+	let defaults = this.tagDefaults[path[path.length-1].tag];
+	for (let i in defaults) {
+		properties[i] = {
+			value: defaults[i],
+			specificity: [ 0, 0, 0, 0, 0 ]
+		};
+	}
 	// go through all matching style definitions and collect properties based on specificity
 	for (let i=0; i<this.styles.length; i++) {
 		if (this.pathFollowsCondition(path, this.styles[i].condition)) {
