@@ -2,6 +2,8 @@ const JsDom = require("JsDom").JSDOM;
 
 const StyleEngine = require("./style_engine.js");
 
+const html = require("util-one").html;
+
 /* Ignore tags will be skipped when parsing the tree */
 const DEFAULT_IGNORE_TAGS = [ "style", "script", "img" ];
 /* Content tags will be considered as part of the content and not of the tree */
@@ -86,6 +88,72 @@ HtmlParser.prototype.extractStyleTags = function(dom) {
 	return ret;
 };
 
+HtmlParser.boldTags = [ "b", "strong" ];
+HtmlParser.italicTags = [ "em", "i" ];
+
+/*
+ * Get metastyle (bold, italic) from array of html tags
+ */
+HtmlParser.prototype.getStyleFromTags = function(tags, style) {
+	for (let i=0; i<tags.length; i++) {
+		if (HtmlParser.boldTags.indexOf(tags[i]) !== -1)
+			style["font-weight"] = "bold";
+		if (HtmlParser.italicTags.indexOf(tags[i]) !== -1)
+			style["font-style"] = "italic";
+	}
+};
+
+/*
+ * Sanitize content after everything has been extracted
+ */
+HtmlParser.prototype.sanitizeContent = function(str) {
+	str = html.decodeEntities(str);
+	return str;
+};
+
+/*
+ * Split a content node by styling and return an array of nodes
+ * Each content row will be placed inside a div of span elements
+ */
+HtmlParser.prototype.splitByStyling = function(path, content) {
+	let ret = [];
+	let pieces = html.breakByTag(content);
+	for (let i=0; i<pieces.length; i++) {
+		let rowStyle = {
+			display: "block",
+			margin: "0",
+			padding: "0"
+		};
+		let inheritedRowStyle = this.styleEngine.getInheritedStyle(rowStyle, path[path.length-1].inheritedStyle);
+		let rowPath = path.slice(0);
+		let rowDiv = { tag: "div", class: null, id: null, attributes: {}, style: null };
+		rowDiv.computedStyle = rowStyle;
+		rowDiv.inheritedStyle = inheritedRowStyle;
+		rowPath.push(rowDiv);
+		for (let j=0; j<pieces[i].length; j++) {
+			let elementStyle = {
+				display: "inline",
+				margin: "0",
+				padding: "0"
+			};
+			let inheritedStyle = this.styleEngine.getInheritedStyle(elementStyle, path[path.length-1].inheritedStyle);
+			this.getStyleFromTags(pieces[i][j].tags, inheritedStyle);
+			let elementPath = rowPath.slice(0);
+			let span = { tag: "span", class: null, id: null, attributes: {}, style: null };
+			span.computedStyle = elementStyle;
+			span.inheritedStyle = inheritedStyle;
+			elementPath.push(span);
+			// we can sanitize it already
+			ret.push({
+				content: this.sanitizeContent(pieces[i][j].content),
+				path: elementPath,
+				inheritedStyle: inheritedStyle
+			});
+		}
+	}
+	return ret;
+};
+
 /*
  * Extract DOM content recursively from tree
  */
@@ -126,12 +194,9 @@ HtmlParser.prototype.extractContent = function(domNode, content, path) {
 	}
 	// we didn't find any non-content children, extract the content and put it in the content list
 	if (children.length === 0) {
-		let toPush = {
-			content: domNode.innerHTML,
-			path: path,
-			inheritedStyle: path[path.length-1].inheritedStyle
-		};
-		content.push(toPush);
+		let toPush = this.splitByStyling(path, domNode.innerHTML);
+		for (let i=0; i<toPush.length; i++)
+			content.push(toPush[i]);
 	}
 };
 
